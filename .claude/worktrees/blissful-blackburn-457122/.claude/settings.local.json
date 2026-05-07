@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -E \"\\\\.\\(py|json|yml|yaml\\)$\")",
+      "Bash(uvicorn services.emt_service:app --port 8001)",
+      "Bash(curl -s \"http://127.0.0.1:8001/infoParada/1294\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://openapi.emtmadrid.es/v1/hello/\")",
+      "Bash(curl -s -w \"\\\\nHTTP:%{http_code}\" -H \"X-clientId: e1291b30-0e42-4fb2-b82c-70f5c4225ba2\" -H \"passKey: CEB9AA4ECC8AA23420B759B83CD39A174CBC6B0B986721A4B92AEEFC968A42388F61F7A8F4F881721DEBE6B9B8C90B0DD3773C4EDC730200DF24EDED988CE5F5\" \"https://openapi.emtmadrid.es/v1/mobilitylabs/user/login/\")",
+      "Bash(curl -s -w \"\\\\nHTTP:%{http_code}\" -H \"X-clientId: e1291b30-0e42-4fb2-b82c-70f5c4225ba2\" -H \"passKey: CEB9AA4ECC8AA23420B759B83CD39A174CBC6B0B986721A4B92AEEFC968A42388F61F7A8F4F881721DEBE6B9B8C90B0DD3773C4EDC730200DF24EDED988CE5F5\" \"https://openapi.emtmadrid.es/v2/mobilitylabs/user/login/\")",
+      "Bash(curl -sv -H 'X-clientId: e1291b30-0e42-4fb2-b82c-70f5c4225ba2' -H 'passKey: CEB9AA4ECC8AA23420B759B83CD39A174CBC6B0B986721A4B92AEEFC968A42388F61F7A8F4F881721DEBE6B9B8C90B0DD3773C4EDC730200DF24EDED988CE5F5' https://openapi.emtmadrid.es/v1/mobilitylabs/user/login/)",
+      "Bash(curl -s -w '\\\\nHTTP:%{http_code}' -H 'X-clientId: e1291b30-0e42-4fb2-b82c-70f5c4225ba2' -H 'passKey: 9C9620DE6041055C9534874BEDE9D5E85C146EA6C46248D9DCF6FB61D251B88A15FB0C8879A2E62D9F3C34ABF238E38CBA63847F08251257F5E239AD444CE310' https://openapi.emtmadrid.es/v1/mobilitylabs/user/login/)",
+      "Bash(curl -s -w '\\\\nHTTP:%{http_code}' -X POST https://openapi.emtmadrid.es/v2/transport/busemtmad/stops/1294/arrives/ -H 'accessToken: 12140c90-4a32-11f1-a135-e27a612e6c81' -H 'Content-Type: application/json' -d '{\"cultureInfo\":\"ES\",\"Text_StopRequired_YN\":\"Y\",\"Text_EstimationsRequired_YN\":\"Y\",\"Text_IncidencesRequired_YN\":\"N\"}')",
+      "Bash(curl -s -X POST https://openapi.emtmadrid.es/v2/transport/busemtmad/stops/1294/arrives/ -H 'accessToken: 12140c90-4a32-11f1-a135-e27a612e6c81' -H 'Content-Type: application/json' -d '{\"cultureInfo\":\"ES\",\"Text_StopRequired_YN\":\"Y\",\"Text_EstimationsRequired_YN\":\"Y\",\"Text_IncidencesRequired_YN\":\"N\"}')",
+      "Bash(python3 -c \"import json,sys; lines=sys.stdin.read\\(\\); parts=lines.rsplit\\('\\\\nHTTP:',1\\); d=json.loads\\(parts[0]\\); print\\('HTTP:', parts[1] if len\\(parts\\)>1 else '?'\\); print\\('code:', d.get\\('code'\\)\\); data=d.get\\('data',[]\\); print\\('total stops:', len\\(data\\)\\); print\\('first stop keys:', list\\(data[0].keys\\(\\)\\) if data else 'EMPTY'\\); print\\('sample:', data[0] if data else ''\\)\")",
+      "Bash(pkill -f \"uvicorn services.emt_service:app --port 8001\")",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d, indent=2, ensure_ascii=False\\)\\)\")",
+      "Bash(netstat -ano)",
+      "Bash(taskkill /PID 5604 /F)",
+      "Bash(curl -s \"http://127.0.0.1:8001/buscarParada/america\")",
+      "Bash(uvicorn services.emt_service:app --port 8002)",
+      "Bash(curl -s \"http://127.0.0.1:8002/infoParada/1294\")",
+      "Bash(curl -s \"http://127.0.0.1:8002/buscarParada/america\")",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\('total:', d['total']\\); [print\\(p\\) for p in d['paradas'][:3]]\")",
+      "Bash(curl -s -I -X POST https://openapi.emtmadrid.es/v1/transport/busemtmad/stops/list/ -H 'accessToken: 12140c90-4a32-11f1-a135-e27a612e6c81')",
+      "Bash(python3 -c ' *)",
+      "Bash(uvicorn services.emt_service:app --port 8003)",
+      "Bash(curl -s \"http://127.0.0.1:8003/infoParada/1294\")",
+      "Bash(curl -s \"http://127.0.0.1:8003/buscarParada/america\")",
+      "Bash(curl -s \"http://127.0.0.1:8003/buscarParada/sol\")",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\('total:', d['total']\\); [print\\(p['idParada'], p['nombre']\\) for p in d['paradas'][:5]]\")"
+    ]
+  }
+}

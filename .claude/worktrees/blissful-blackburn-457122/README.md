@@ -1,0 +1,1 @@
+REpositorio de la aplicación que estoy desarrollandos sobre la EMT, con esta app se podrá consultar los tiempos de los buses, y entre otras funcionalidades, se podrá establecer una alarma para que la aplicación te avise cuando queden X minutos para que pase un bus, nunca más se perderá un autobus en madrid!

@@ -1,0 +1,11 @@
+GOAL OF THE PROJECT:
+
+sacar la maxima nota en el tfg
+
+FUNCTIONALITY MILESTONES:
+(ordenado en pasos de implementación)
+
+1. una app de bus que funcione correctamente ( con las funcionalidades básicas)
+2. poder activar notificaciones que te avisen cuando al bus le quede x tiempo
+3. implementación de un apartado estilo google maps, en el que el aparece el bus con una buena precision, el tiempo que le queda para llegar a la parada mas cercana al usuario y su dirección (flecha estilo google maps)
+4. UI fluida, amigable y que todas las funcionalidades funcionen fluida y correctamente

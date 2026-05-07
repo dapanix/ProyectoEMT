@@ -1,0 +1,192 @@
+================================================================================
+  NOTIFYMEBUS — PROJECT SPECS
+  Última actualización: 2026-05-06
+  Autor: Daniel Fernández Neira
+  TFC DAM 2025-2026 | Tutora: Samai García González
+================================================================================
+
+DEADLINE: 17 de mayo de 2026
+
+
+────────────────────────────────────────────────────────────────────────────────
+1. DESCRIPCIÓN DEL PROYECTO
+────────────────────────────────────────────────────────────────────────────────
+App Android para EMT Madrid que convierte la espera activa del bus en espera
+pasiva mediante un sistema de notificaciones altamente configurable. El usuario
+especifica cuántos minutos de antelación quiere recibir el aviso antes de que
+el bus llegue a su parada. Además incluye las funcionalidades estándar de una
+app de transporte y un mapa en tiempo real.
+
+
+────────────────────────────────────────────────────────────────────────────────
+2. STACK TECNOLÓGICO
+────────────────────────────────────────────────────────────────────────────────
+Frontend:       Android Studio (Kotlin/Java)
+Backend:        Python (FastAPI — ver código existente en /routers, /services)
+Base de datos:  PostgreSQL
+API externa:    EMT Madrid API (credenciales ya obtenidas)
+Mapas:          Google Maps SDK for Android
+                  → Modelo de pago: pay-per-use (sin cuota fija mensual)
+                  → Evaluar si Maps SDK básico + quota gratuita cubre el uso
+                    académico sin coste
+
+
+────────────────────────────────────────────────────────────────────────────────
+3. ARQUITECTURA — DECISIONES TOMADAS
+────────────────────────────────────────────────────────────────────────────────
+
+3.1 NOTIFICACIONES (polling)
+  - El polling a la API de EMT lo hace el DISPOSITIVO (cliente Android),
+    no el backend. [Decisión: opción B, con apertura a cambiar si es mejor]
+  - Mecanismo Android: WorkManager o AlarmManager + Service en background.
+
+3.2 BACKEND
+  - El backend actúa como PROXY de la API EMT para proteger la API key
+    (no se embebe en el APK).
+  [PENDIENTE: confirmar si proxy es requisito o se acepta key en APK
+   para simplificar dado el tiempo disponible]
+  - Vive en LOCALHOST durante desarrollo y entrega del TFC.
+
+3.3 AUTENTICACIÓN
+  - La app NO requiere registro ni login de usuario.
+  - Los datos de usuario (favoritos, historial, alertas programadas) se
+    almacenan localmente en el dispositivo (Room DB o SharedPreferences).
+
+3.4 MAPAS
+  - Muestra AMBAS cosas: posición de paradas + posición del bus en tiempo real.
+  - La "flecha de dirección" del bus sigue la línea de ruta predefinida,
+    no el GPS real del vehículo (suficiente para dar impresión de movimiento).
+  - Actualización periódica de posición del bus en el mapa.
+
+
+────────────────────────────────────────────────────────────────────────────────
+4. FUNCIONALIDADES
+────────────────────────────────────────────────────────────────────────────────
+
+4.1 FUNCIONALIDAD CORE — Sistema de notificaciones
+  Características:
+  - Alertas de un solo disparo (se consume tras notificar).
+  - Múltiples alertas activas simultáneamente.
+  - Altamente configurable. Modos previstos:
+      a) ALERTA SIMPLE: avísame cuando al bus X en parada Y le queden N min.
+      b) ALERTA PROGRAMADA POR HORA: cerca de las HH:MM, avísame cuando
+         al bus X le queden N min (ej: "a las 17:00, cuando queden 5 min").
+      c) ALERTA DE PRÓXIMOS N BUSES: avísame de los 2 próximos buses a
+         una parada cuando les queden N min (ej: los 2 siguientes a las 17h).
+  - La app puede estar en background/cerrada y debe seguir funcionando.
+
+4.2 FUNCIONALIDADES ESTÁNDAR
+  - Buscar parada por nombre o número
+  - Ver líneas que pasan por una parada
+  - Ver tiempos de llegada en tiempo real
+  - Ver el recorrido completo de una línea
+  - Paradas favoritas
+  - Historial de búsquedas recientes
+
+4.3 MAPA
+  - Ver posición de paradas en el mapa
+  - Ver posición del bus en movimiento (actualización periódica)
+  - Indicador de dirección del bus (simulado según ruta predefinida)
+  - Ver tiempo restante hasta parada más cercana al usuario
+
+
+────────────────────────────────────────────────────────────────────────────────
+5. ESTADO ACTUAL DEL CÓDIGO (2026-05-06)
+────────────────────────────────────────────────────────────────────────────────
+- Backend Python con estructura FastAPI (/core, /models, /routers, /services)
+- Funcional: consulta de tiempos de espera de una parada vía API EMT
+- Frontend Android: NO iniciado
+- Base de datos: NO configurada
+- Notificaciones: NO implementadas
+- Mapas: NO implementadas
+
+
+────────────────────────────────────────────────────────────────────────────────
+6. PRIORIDAD DE IMPLEMENTACIÓN (dado el deadline del 17 de mayo)
+────────────────────────────────────────────────────────────────────────────────
+FASE 1 — MVP funcional (crítico para entrega)
+  1. Backend: endpoints necesarios para la app Android
+  2. Android: pantalla de búsqueda de parada + tiempos de llegada
+  3. Android: sistema de notificaciones (alerta simple primero)
+  4. Android: UI básica navegable
+
+FASE 2 — Valor diferencial
+  5. Alertas programadas por hora / próximos N buses
+  6. Paradas favoritas e historial
+
+FASE 3 — Extra (si da tiempo)
+  7. Mapa con posición de paradas
+  8. Posición del bus en tiempo real + flecha de dirección
+
+
+────────────────────────────────────────────────────────────────────────────────
+7. DECISIONES PENDIENTES
+────────────────────────────────────────────────────────────────────────────────
+[ ] ¿Backend como proxy EMT (protege API key) o app llama directamente
+    a EMT (más rápido de implementar)?
+[ ] ¿Modo alerta programada: AlarmManager exact vs. WorkManager periódico?
+[ ] ¿Almacenamiento local: Room DB o SharedPreferences para alertas/favoritos?
+[ ] ¿Qué entrega exactamente la tutora el 17 de mayo? (APK, memoria, demo...)
+
+
+────────────────────────────────────────────────────────────────────────────────
+8. FUERA DE ALCANCE (para esta entrega)
+────────────────────────────────────────────────────────────────────────────────
+- Publicación en Google Play Store
+- Monetización con anuncios
+- Soporte multi-ciudad (solo EMT Madrid)
+- Modo offline
+- Autenticación / cuentas de usuario
+
+
+────────────────────────────────────────────────────────────────────────────────
+9. DOCUMENTACIÓN TÉCNICA A ENTREGAR
+────────────────────────────────────────────────────────────────────────────────
+- Memoria del proyecto
+- Diagrama de clases
+- Diagrama Entidad-Relación (ER)
+- [Otros según plantilla Euroformac]
+================================================================================
+
+
+────────────────────────────────────────────────────────────────────────────────
+10. REQUISITOS OFICIALES DE ENTREGA TFC (DAM)
+────────────────────────────────────────────────────────────────────────────────
+Marco legal: Real Decreto 450/2010 (BOE-A-2010-8067)
+Módulo oficial: 0619 "Proyecto de desarrollo de aplicaciones multiplataforma"
+
+TRES ENTREGABLES OBLIGATORIOS:
+
+A) MEMORIA TÉCNICA ESCRITA
+   La plantilla Euroformac (plantilla.md) cubre todos los requisitos oficiales.
+   Secciones mínimas según RD 450/2010:
+   - Identificación del proyecto (título, objetivos, alcance)
+   - Análisis (requisitos funcionales y no funcionales)
+   - Diseño (arquitectura, modelo de datos, interfaces)
+   - Desarrollo (implementación, herramientas, decisiones técnicas)
+   - Pruebas (plan de pruebas y resultados)
+   - Documentación final (manual usuario + manual instalación)
+
+B) PRODUCTO SOFTWARE
+   - Aplicación funcional (o sustancialmente funcional)
+   - Código fuente vía repositorio GitHub o archivo comprimido
+   - APK ejecutable (para Android)
+
+C) DEFENSA ORAL
+   - Presentación ante tribunal: 15–30 min
+   - Demo de la app funcionando
+   - Preguntas del tribunal
+
+CRITERIOS DE EVALUACIÓN OFICIALES (módulo 0619):
+   a) Elaboración del proyecto técnico del ciclo
+   b) Estructura y contenido del proyecto técnico
+   c) Planificación de fases, tareas y recursos
+   d) Identificación de necesidades hardware/software
+   e) Desarrollo siguiendo ciclo de vida software adecuado
+   f) Pruebas y verificaciones del software
+   g) Documentación técnica completa
+   h) Exposición y defensa ante tribunal
+
+NOTA: La plantilla Euroformac ya cubre el 100% de los requisitos del RD.
+      Verificar si Euroformac tiene guía propia adicional.
+================================================================================

@@ -1,2 +1,9 @@
-headersCredenciales = {"X-clientId": "e1291b30-0e42-4fb2-b82c-70f5c4225ba2",
-                       "passKey": "CEB9AA4ECC8AA23420B759B83CD39A174CBC6B0B986721A4B92AEEFC968A42388F61F7A8F4F881721DEBE6B9B8C90B0DD3773C4EDC730200DF24EDED988CE5F5"}
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+headersCredenciales = {
+    "X-clientId": os.getenv("EMT_CLIENT_ID"),
+    "passKey": os.getenv("EMT_PASS_KEY"),
+}
