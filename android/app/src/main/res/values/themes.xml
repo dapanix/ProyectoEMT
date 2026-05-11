@@ -1,0 +1,18 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.AplicacionEMT" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/emt_blue</item>
+        <item name="colorPrimaryVariant">@color/emt_blue_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:windowBackground">@color/emt_background</item>
+    </style>
+
+    <style name="Theme.AplicacionEMT" parent="Base.Theme.AplicacionEMT" />
+
+    <style name="AppToolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">@color/emt_blue</item>
+        <item name="titleTextColor">@color/white</item>
+        <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+    </style>
+</resources>

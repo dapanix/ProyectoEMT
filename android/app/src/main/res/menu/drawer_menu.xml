@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_mis_paradas"
+            android:icon="@drawable/ic_home"
+            android:title="Mis Paradas"
+            android:checked="true"/>
+        <item
+            android:id="@+id/nav_lineas"
+            android:icon="@drawable/ic_directions_bus"
+            android:title="Líneas"/>
+        <item
+            android:id="@+id/nav_mapa"
+            android:icon="@drawable/ic_map"
+            android:title="Mapa"/>
+        <item
+            android:id="@+id/nav_recuerdame"
+            android:icon="@drawable/ic_notifications"
+            android:title="Recuérdame"/>
+    </group>
+</menu>
