@@ -7,9 +7,22 @@ venv/
 .venv/
 *.egg-info/
 dist/
-build/
 
 # Android / Gradle
+*.iml
+.gradle
+/local.properties
+local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+/build
+/captures
+.externalNativeBuild
+.cxx
 android/.gradle/
 android/build/
 android/app/build/
@@ -18,5 +31,5 @@ android/*.iml
 android/.idea/
 
 # General
-*.DS_Store
+.DS_Store
 Thumbs.db
