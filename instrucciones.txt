@@ -1,0 +1,1 @@
+Buenas Samai, para probar la aplicacion y que funcione bien, se debe correr el backend en mi ordenador, lo mas facil es que me avises antes de probarlo y yo inicio el servidor, muchas gracias :))
