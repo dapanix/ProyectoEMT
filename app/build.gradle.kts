@@ -1,7 +1,15 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("org.jetbrains.kotlin.kapt")
+}
+
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.inputStream().use { localProperties.load(it) }
 }
 
 android {
@@ -18,6 +26,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders["MAPS_API_KEY"] = localProperties.getProperty("MAPS_API_KEY") ?: ""
     }
 
     buildTypes {
@@ -65,4 +74,10 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
     // Fragment KTX (viewModels() delegate)
     implementation("androidx.fragment:fragment-ktx:1.6.2")
+    // WorkManager — polling de bus en background
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+    // Google Maps SDK
+    implementation("com.google.android.gms:play-services-maps:19.0.0")
+    // Maps Utils (clustering)
+    implementation("com.google.maps.android:android-maps-utils:3.8.2")
 }

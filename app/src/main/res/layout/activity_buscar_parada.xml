@@ -39,6 +39,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Nombre de la parada..."
+                    android:textColorHint="#616161"
                     android:inputType="text"
                     android:imeOptions="actionSearch"
                     android:maxLines="1"
@@ -75,7 +76,7 @@
             android:layout_marginTop="32dp"
             android:gravity="center"
             android:text="Sin resultados"
-            android:textColor="#757575"
+            android:textColor="#545454"
             android:textSize="16sp"
             android:visibility="gone"/>
 

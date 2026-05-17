@@ -3,6 +3,7 @@ package com.example.aplicacionemt.network
 import com.example.aplicacionemt.model.BuscarParadaResponse
 import com.example.aplicacionemt.model.InfoParadaResponse
 import com.example.aplicacionemt.model.LineaParadasResponse
+import com.example.aplicacionemt.model.TodasParadasResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -23,4 +24,7 @@ interface ApiService {
     fun getParadasLinea(
         @Path("lineId") lineId: String
     ): Call<LineaParadasResponse>
+
+    @GET("paradas")
+    fun getTodasParadas(): Call<TodasParadasResponse>
 }
